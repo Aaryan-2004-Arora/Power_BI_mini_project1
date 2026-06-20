@@ -1,239 +1,494 @@
-# Mini Power BI Dashboard: Business Insights Case Study
+# Recorded Lectures, Decoded: An EdTech Power BI Case Study
 
-A Power BI dashboard built to transform raw data into actionable business insights through data cleaning, modeling, DAX calculations, and interactive visualizations.
+A Power BI dashboard built to transform raw EdTech course data into actionable business insights. This project analyzes learner engagement, course performance, language preferences, instructor quality, skill demand, and content accessibility to help an EdTech startup make data-driven decisions for expanding its recorded lecture offerings.
 
 ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=flat&logo=powerbi&logoColor=black)
-![DAX](https://img.shields.io/badge/DAX-Data%20Analysis%20Expressions-blue)
+![DAX](https://img.shields.io/badge/DAX-CALCULATE%20%7C%20RANKX%20%7C%20ALLEXCEPT-blue)
+![Power Query](https://img.shields.io/badge/Power%20Query-Data%20Transformation-success)
 ![Status](https://img.shields.io/badge/Status-Complete-success)
 
 ---
 
-## Project Overview
+# The Business Problem
 
-This project demonstrates an end-to-end Power BI workflow, starting from raw data and ending with an interactive dashboard designed for business decision-making.
+An EdTech startup aims to expand its recorded lecture business but lacks visibility into learner preferences, content performance, instructor effectiveness, and language demand.
 
-The objective was to identify trends, measure performance, and answer key business questions through data visualization and analytics.
+The company collected data from multiple EdTech platforms but needed a structured analysis to answer critical business questions regarding:
 
-The dashboard enables users to:
+- Which categories attract the most learners?
+- Which course formats perform best?
+- Which skills are currently in demand?
+- Which languages should future courses support?
+- Do subtitles increase engagement?
+- Which instructors should the company partner with?
+- What course duration attracts the highest viewership?
 
-- Monitor KPIs
-- Analyze category-level performance
-- Identify top-performing segments
-- Compare metrics across dimensions
-- Generate actionable business insights
-
----
-
-## Business Problem
-
-Organizations often possess large volumes of raw data but lack a centralized reporting solution that converts data into meaningful insights.
-
-This project addresses that challenge by:
-
-- Cleaning and transforming raw data
-- Building a structured data model
-- Creating DAX measures for analysis
-- Designing an interactive dashboard for stakeholders
+A major project requirement was that all analysis should be performed with a **Category-First Approach**, allowing stakeholders to evaluate performance at both Category and Sub-Category levels.
 
 ---
 
-## Dataset
+# Project Objectives
 
-The dataset contains information related to business performance and includes multiple dimensions used for analysis.
+The dashboard was developed to answer the following business questions:
 
-### Key Fields
+| # | Business Question |
+|---|---|
+| Q1 | Examine the distribution of course types across categories and sub-categories. |
+| Q2 | Calculate average views for each category, sub-category, and language. |
+| Q3 | Identify the most commonly taught skills by category. |
+| Q4 | Analyze the distribution of languages in which courses are created. |
+| Q5 | Determine language preferences for the Top 5 categories based on viewer demand. |
+| Q6 | Investigate the relationship between subtitle availability and viewer engagement. |
+| Q7 | Identify the Top 3 instructors for each category and sub-category based on ratings. |
+| Q8 | Examine the relationship between course duration and number of views. |
+| Q9 | Analyze whether skill diversity influences viewership. |
+| Q10 | Generate strategic recommendations for future course investments. |
+
+---
+
+# Dataset Overview
+
+The dataset contains information collected from multiple online learning platforms and includes:
+
+### Course Information
+
+- Course Name
+- Course Type
+- Category
+- Sub-Category
+
+### Engagement Metrics
+
+- Number of Viewers
+- Ratings
+
+### Content Attributes
+
+- Duration
+- Language
+- Subtitle Languages
+- Skills Covered
+
+### Instructor Information
+
+- Instructor Name(s)
+
+The raw dataset contained several multi-value fields where a single course could have multiple instructors, skills, or subtitle languages.
+
+---
+
+# Data Cleaning & Transformation
+
+The data preparation process was performed entirely in **Power Query**.
+
+### Key Cleaning Steps
+
+- Removed unnecessary and sparse columns
+- Handled missing values
+- Standardized text formatting
+- Converted ratings into numerical values
+- Converted viewer counts into numerical format
+- Standardized duration values
+
+### Duration Transformation Logic
+
+To ensure consistency:
+
+| Original Value | Converted To |
+|---------------|-------------|
+| 1 Month | 60 Hours |
+| Flexible Schedule | 200 Hours |
+
+### Multi-Value Field Handling
+
+The following columns contained comma-separated values:
+
+- Skills
+- Instructors
+- Subtitle Languages
+
+Separate analytical tables were created to properly analyze these dimensions without causing aggregation issues.
+
+---
+
+# Data Modeling
+
+A relational model was created to support accurate reporting and analysis.
+
+### Main Analytical Dimensions
 
 - Category
 - Sub-Category
-- Product / Service Information
-- Revenue Metrics
-- Performance Metrics
-- Customer Information
-- Time-Based Data
+- Skills
+- Language
+- Subtitle Languages
+- Instructors
+
+This approach allowed:
+
+- Accurate aggregations
+- Instructor ranking analysis
+- Skill frequency analysis
+- Subtitle impact analysis
+- Language preference analysis
+
+without double-counting courses.
 
 ---
 
-## Data Preparation
+# DAX Measures & Calculations
 
-### Power Query Transformations
+The dashboard uses several DAX functions to perform advanced business analysis.
 
-- Removed unnecessary columns
-- Handled null values
-- Corrected data types
-- Standardized text values
-- Created calculated columns
-- Optimized dataset structure
-
----
-
-## Data Modeling
-
-A star-schema inspired model was created to improve performance and maintainability.
-
-### Relationships
-
-- Fact Table
-- Dimension Tables
-  - Category
-  - Date
-  - Customer
-  - Product
-
----
-
-## DAX Measures
-
-Several DAX measures were created to support dashboard analytics:
-
-### KPI Measures
-
-- Total Revenue
-- Total Transactions
-- Total Customers
-- Average Performance
-- Growth Percentage
-
-### Advanced Calculations
-
-- Ranking Measures
-- Category-Level Analysis
-- Percentage Contribution
-- Running Totals
-- Context-Aware Calculations using:
+### Core Functions Used
 
 ```DAX
 CALCULATE()
 ALL()
 ALLEXCEPT()
 RANKX()
+COUNTROWS()
+AVERAGEX()
+DISTINCTCOUNT()
 ```
 
----
+### Key Measures
 
-## Dashboard Pages
-
-### Home
-
-Executive overview of the complete dashboard.
-
-### Q1
-
-Business question 1 analysis.
-
-### Q2
-
-Business question 2 analysis.
-
-### Q3
-
-Business question 3 analysis.
-
-### Q4
-
-Business question 4 analysis.
-
-### Q5
-
-Business question 5 analysis.
-
-### Q6
-
-Business question 6 analysis.
-
-### Q7
-
-Business question 7 analysis.
-
-### Q8
-
-Business question 8 analysis.
-
-### Q9
-
-Business question 9 analysis.
-
-### Q10
-
-Business question 10 analysis.
-
-### Conclusion
-
-Final recommendations and key insights.
+- Total Courses
+- Total Views
+- Average Views
+- Average Rating
+- Course Count by Category
+- Course Count by Sub-Category
+- Top Instructor Ranking
+- Language Ranking
+- Skill Frequency
+- Skill Diversity Metrics
 
 ---
 
-## Key Insights
+# Dashboard Analysis
 
-Some major findings generated from the dashboard include:
+## Q1 — Course Type Distribution
 
-- High-performing categories drive the majority of business value.
-- A small number of segments contribute disproportionately to overall results.
-- Certain customer groups show significantly higher engagement.
-- Performance varies across categories and dimensions.
-- Data-driven prioritization opportunities were identified.
+### Objective
+
+Analyze how different course types are distributed across categories and sub-categories.
+
+### Insights Generated
+
+- Course count by category
+- Course count by sub-category
+- Course type distribution
+- Popular content formats
+
+### Business Value
+
+Helps determine which course formats should be launched within specific categories.
 
 ---
 
-## Tools & Technologies
+## Q2 — Viewer Engagement Analysis
+
+### Objective
+
+Calculate average views across:
+
+- Categories
+- Sub-Categories
+- Languages
+
+### Insights Generated
+
+- High-engagement categories
+- High-engagement sub-categories
+- Language-wise viewer behavior
+
+### Business Value
+
+Helps prioritize investments in categories with the highest learner demand.
+
+---
+
+## Q3 — Skill Demand Analysis
+
+### Objective
+
+Identify the most commonly taught skills in each category.
+
+### Insights Generated
+
+- Top skills by category
+- Skill frequency rankings
+- Emerging learning trends
+
+### Business Value
+
+Ensures future course offerings remain aligned with industry demand and learner interests.
+
+---
+
+## Q4 — Language Distribution Analysis
+
+### Objective
+
+Understand the language distribution of courses.
+
+### Insights Generated
+
+- Language share across the catalog
+- Dominant course languages
+- Localization opportunities
+
+### Business Value
+
+Supports content expansion into underserved language markets.
+
+---
+
+## Q5 — Language Preference Analysis
+
+### Objective
+
+Analyze viewer language preferences within the Top 5 categories.
+
+### Insights Generated
+
+- Top-performing languages
+- Language popularity by category
+- Viewer demand patterns
+
+### Business Value
+
+Guides future content localization strategies.
+
+---
+
+## Q6 — Subtitles vs Viewer Engagement
+
+### Objective
+
+Determine whether subtitle availability impacts viewership.
+
+### Insights Generated
+
+- Subtitle count distribution
+- Average views by subtitle coverage
+- Accessibility impact analysis
+
+### Business Value
+
+Measures the ROI of investing in multilingual subtitles.
+
+---
+
+## Q7 — Top Instructor Analysis
+
+### Objective
+
+Identify the Top 3 instructors for each category and sub-category based on ratings.
+
+### Insights Generated
+
+- Instructor rankings
+- High-performing educators
+- Category-specific teaching leaders
+
+### Business Value
+
+Provides a shortlist of instructors who can be approached for partnerships and content creation.
+
+---
+
+## Q8 — Duration vs Viewership Analysis
+
+### Objective
+
+Understand how course duration impacts viewer engagement.
+
+### Insights Generated
+
+- Duration patterns
+- Optimal course lengths
+- Engagement by category and sub-category
+
+### Business Value
+
+Helps design courses with durations that maximize learner retention and viewership.
+
+---
+
+## Q9 — Skill Diversity Impact Analysis
+
+### Objective
+
+Investigate whether the variety of skills offered influences course popularity.
+
+### Insights Generated
+
+- Skill count by category
+- Skill diversity vs average views
+- Breadth of learning opportunities
+
+### Business Value
+
+Helps determine whether broader skill coverage increases learner engagement.
+
+---
+
+## Q10 — Strategic Recommendations
+
+### Objective
+
+Combine findings from all analyses into actionable recommendations.
+
+### Recommendations Focus On
+
+- Category Expansion
+- Language Strategy
+- Subtitle Investments
+- Instructor Partnerships
+- Skill-Based Content Planning
+- Optimal Course Design
+
+---
+
+# Key Findings
+
+### Category Matters Most
+
+Certain categories consistently attract higher viewership and engagement, making them prime candidates for future investment.
+
+### Skills Drive Demand
+
+Frequently taught and industry-relevant skills attract significantly higher learner interest.
+
+### Language Influences Reach
+
+English dominates the catalog, but localized content presents a significant growth opportunity.
+
+### Subtitles Improve Accessibility
+
+Courses with broader subtitle coverage tend to achieve stronger engagement.
+
+### Instructor Quality Impacts Success
+
+A small group of instructors consistently receive top ratings across multiple categories.
+
+### Duration Has an Effect
+
+Both short-form and well-structured long-form content outperform average-length courses.
+
+### Skill Diversity Can Increase Engagement
+
+Courses offering broader skill coverage often attract more viewers and create greater learner value.
+
+---
+
+# Tools & Technologies
+
+### Business Intelligence
 
 - Power BI Desktop
+
+### Data Preparation
+
 - Power Query
+
+### Data Modeling
+
+- Star Schema Principles
+- Relationship Modeling
+
+### Analytics
+
 - DAX
-- Data Modeling
-- Interactive Visualizations
+
+### Visualization
+
+- Interactive Dashboards
+- Slicers
+- Drilldowns
+- Tooltips
+- Ranking Visuals
 
 ---
 
-## Repository Structure
+# Repository Structure
 
 ```text
 ├── Mini Power BI project.pbix
-├── Dataset.csv
+├── Online_Courses.csv
 ├── Screenshots/
+│   ├── Home.png
+│   ├── Q1.png
+│   ├── Q2.png
+│   ├── Q3.png
+│   ├── Q4.png
+│   ├── Q5.png
+│   ├── Q6.png
+│   ├── Q7.png
+│   ├── Q8.png
+│   ├── Q9.png
+│   ├── Q10.png
+│   └── Conclusion.png
 └── README.md
 ```
 
 ---
 
-## How to Explore
+# How To Explore
 
-1. Download the repository.
-2. Open the `.pbix` file using Power BI Desktop.
+1. Clone this repository.
+2. Open `Mini Power BI project.pbix` using Power BI Desktop.
 3. Refresh data if required.
-4. Use slicers and filters to interact with the dashboard.
-5. Navigate through all report pages for detailed analysis.
+4. Navigate through dashboard pages.
+5. Use slicers and filters to explore category-level insights.
+6. Drill into categories and sub-categories for deeper analysis.
 
 ---
 
-## Skills Demonstrated
+# Skills Demonstrated
 
 - Data Cleaning
 - Data Transformation
+- Power Query
 - Data Modeling
 - DAX
-- Business Intelligence
-- Dashboard Design
+- Business Analysis
+- Dashboard Development
 - Data Visualization
+- Insight Generation
+- Stakeholder Reporting
+- KPI Design
 - Analytical Thinking
 
 ---
 
-## Future Improvements
+# Future Improvements
 
-- Real-time data integration
-- Automated refresh pipelines
-- Additional KPI tracking
-- Predictive analytics
-- Advanced forecasting models
+With additional data, the analysis could be extended to include:
+
+- Time-Series Engagement Trends
+- Revenue Analysis
+- Course Pricing Analysis
+- Learner Retention Metrics
+- Predictive Demand Forecasting
+- Recommendation Systems
 
 ---
 
-## Author
+# Author
 
-**Aaryan Arora**
+## Aaryan Arora
 
 Business Analyst | Data Analyst | Power BI Developer
 
-GitHub: https://github.com/Aaryan-2004-Arora
+### Connect With Me
 
-LinkedIn: <Your LinkedIn URL>
+- GitHub: https://github.com/Aaryan-2004-Arora
+- LinkedIn: https://www.linkedin.com/in/aaryan-arora
+
+---
+
+If you found this project useful, consider giving the repository a ⭐.
